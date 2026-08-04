@@ -1,6 +1,6 @@
 # Black-Scholes Options Pricer & Implied Volatility Solver
 
-![Tests](https://github.com/YOUR-GITHUB-USERNAME/options-pricer/actions/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/samaranro/options-pricer/actions/workflows/tests.yml/badge.svg)
 
 A from-scratch implementation of the Black-Scholes-Merton model, built to
 understand — not just use — how options pricing, Greeks, and implied
