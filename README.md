@@ -1,6 +1,6 @@
 # Black-Scholes Options Pricer & Implied Volatility Solver
 
-![Tests](https://github.com/samaranro/options-pricer/actions/workflows/tests.yml/badge.svg)
+![Tests](https://github.com/YOUR-GITHUB-USERNAME/options-pricer/actions/workflows/tests.yml/badge.svg)
 
 A from-scratch implementation of the Black-Scholes-Merton model, built to
 understand — not just use — how options pricing, Greeks, and implied
@@ -60,6 +60,24 @@ almost exactly (`max diff = 2.18e-09`).
 
 ![Greeks vs Spot](greeks_vs_spot.png)
 
+## Real market data
+
+`real_market_smile.py` pulls a **live** option chain (via Yahoo Finance) for
+any ticker, backs out implied volatility from actual traded prices using the
+same `implied_vol()` solver above, and plots the real smile the market is
+pricing right now -- not a simulation.
+
+```bash
+python3 real_market_smile.py AAPL     # or any optionable ticker
+```
+
+This is the step that moves the project from "the math is implemented
+correctly" (which the simulated smile above already proves) to "the model
+was pointed at real, live market data." Strikes where the solver can't find
+a valid implied vol are skipped and reported rather than silently dropped --
+usually deep ITM/OTM options with stale or crossed quotes, which is a real
+data-quality issue on real order books, not a bug in the pricer.
+
 ## Running it
 
 ```bash
@@ -73,9 +91,9 @@ python3 -m pytest -v            # run the full test suite
 
 ## What I'd build next
 
-- Calibrate the smile to real option chain data (yfinance / a broker API) instead of a simulated skew
 - Add a binomial tree pricer for American-style options, where early exercise breaks the closed-form Black-Scholes solution
-- Extend the implied vol solver to build a full SVI (stochastic volatility inspired) surface fit across strikes and expiries simultaneously
+- Extend the implied vol solver to build a full SVI (stochastic volatility inspired) surface fit across strikes and expiries simultaneously, using the live data pipeline above
+- Fetch the risk-free rate live (e.g. from `^IRX`) instead of the hardcoded constant in `real_market_smile.py`
 
 ---
 *Built by Sa'Mara Roberts*
